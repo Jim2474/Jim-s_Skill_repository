@@ -106,11 +106,24 @@ def parse_alipay(file_path):
             payment = parts[7]
             status = parts[8] if len(parts) > 8 else ''
 
-            # 跳过不计收支和交易关闭的交易
-            if direction == '不计收支':
-                continue
+            # 跳过交易关闭的交易
             if status == '交易关闭':
                 continue
+
+            # 跳过退款成功的交易
+            if '退款' in status or '退款' in desc:
+                continue
+
+            # 小荷包内部消费（不计收支，但付款方式是小荷包）- 标记为小荷包支出
+            is_xiaohebao = '小荷包' in payment
+
+            if direction == '不计收支':
+                if is_xiaohebao:
+                    # 小荷包内部消费，标记为支出
+                    direction = '支出'
+                else:
+                    # 其他不计收支的交易跳过
+                    continue
 
             if not amount_str or amount_str == '/':
                 continue
@@ -126,6 +139,7 @@ def parse_alipay(file_path):
                 'direction': direction,
                 'payment': payment,
                 'status': status,
+                'is_xiaohebao': is_xiaohebao,
             })
         except Exception as e:
             continue
@@ -325,8 +339,11 @@ def generate_report(transactions, year, month):
             refund.append(txn)
             continue
 
-        # 分类交易
-        category = classify_transaction(desc, counterparty, amount)
+        # 小荷包付款的交易全部归类到支付宝小荷包
+        if txn.get('is_xiaohebao'):
+            category = '💰 支付宝小荷包'
+        else:
+            category = classify_transaction(desc, counterparty, amount)
 
         if category == '投资':
             investment.append(txn)
