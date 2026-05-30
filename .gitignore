@@ -7,4 +7,6 @@ Thumbs.db
 ~$*.docx
 ~$*.doc
 *.log
+ecc/
+.claude/
 

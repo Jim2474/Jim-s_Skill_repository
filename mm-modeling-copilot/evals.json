@@ -1,0 +1,30 @@
+{
+  "skill_name": "mm-modeling-copilot",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我完成一个数学建模题：根据给定城市交通流量数据，建立模型预测未来一周拥堵指数，并生成 report.md。",
+      "expected_output": "Decomposes into subtasks (data analysis, model selection, prediction, validation). Uses Actor-Critic to refine problem analysis. Selects time-series or regression baseline with justification. Writes runnable Python code with iterative debugging. Generates figures. Produces structured report with sensitivity analysis and self-evaluation score."
+    },
+    {
+      "id": 2,
+      "prompt": "这是一个资源分配建模问题，目标是在预算约束下最大化覆盖率。帮我建模、求解、做敏感性分析。",
+      "expected_output": "Identifies optimization model (LP/MIP). Uses Actor-Critic for model formulation. Defines variables, objective, constraints mathematically. Solves with scipy or PuLP. Iteratively debugs code. Checks constraint satisfaction. Reports sensitivity to budget parameter with sweep table and figure."
+    },
+    {
+      "id": 3,
+      "prompt": "根据多个指标评价几种方案的优劣，帮我选择合适的数学模型并写成建模论文。",
+      "expected_output": "Selects evaluation method (entropy weight + TOPSIS or AHP) with justification from HMML library. Uses Actor-Critic to critique method choice. Computes weights and rankings. Generates comparison figures. Writes complete report with LaTeX template option."
+    },
+    {
+      "id": 4,
+      "prompt": "MCM 2025 Problem C: 给定运动数据，建模分析运动员表现趋势并预测未来表现。需要完整的建模论文。",
+      "expected_output": "Full 4-stage pipeline. Decomposes into 4+ subtasks with DAG. Uses prediction methods from HMML. Actor-Critic refinement at each stage. Iterative code debugging. Sensitivity analysis. Generates LaTeX report with mcmthesis template. Self-evaluation score ≥35/50."
+    },
+    {
+      "id": 5,
+      "prompt": "建立一个传染病传播模型，分析不同防控措施的效果。",
+      "expected_output": "Selects compartmental model (SIR/SEIR) from HMML. Decomposes into model construction, parameter estimation, scenario comparison. Implements ODE solver. Generates time-trajectory plots. Sensitivity analysis on transmission rate and recovery rate. Validates against known epidemic behavior."
+    }
+  ]
+}

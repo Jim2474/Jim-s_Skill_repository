@@ -1,10 +1,78 @@
-# EXP Report Creator
+# Jim's Skill Repository
 
-一个用于自动生成 MATLAB 实验报告的原型项目。
+Claude Code 自建技能集合，包含 MCP 服务器、数学建模、论文写作、实验报告生成等工具。
 
-当前目标是把“实验指导书 + MATLAB 实验代码 + 真实运行结果”整理成可打印的 A4 Word 实验报告。项目会优先使用 MATLAB 批处理真实运行 `.m` 文件，再把命令行输出渲染成 MATLAB 风格结果图；曲线图由 MATLAB 直接保存。
+## 技能清单
 
-## 已验证流程
+### MCP Servers
+
+| 技能 | 说明 | 用法 |
+|------|------|------|
+| **vision-recognize** | 图片识别（非 OCR），返回结构化 Markdown | MCP 自动调用，提供图片路径即可 |
+
+### 数学建模 & 科研
+
+| 技能 | 说明 |
+|------|------|
+| **mm-modeling-copilot** | 端到端数学建模助手（NeurIPS 2025 MM-Agent 流程），支持问题分析 → 建模 → 求解 → 报告 |
+| **paper-spine** | 论文写作工作流编排器（12 个子技能覆盖：选题、引用、重写、LaTeX、翻译、降 AI 率等） |
+
+### 实验报告 & 文档
+
+| 技能 | 说明 |
+|------|------|
+| **matlab-lab-report** | MATLAB 控制系统实验自动生成 A4 Word 报告 |
+| **tailored-resume-generator** | 根据 JD 自动生成针对性简历 |
+| **design-md** | 将品牌设计系统应用到项目（支持 71 个品牌） |
+
+### 学习笔记
+
+| 技能 | 说明 |
+|------|------|
+| **learned/textbook-pdf-extraction** | 从中文教材 PDF 提取数学题目和答案 |
+
+## 环境要求
+
+- Windows 10/11
+- Python 3.10+（venv 位于 `~/.claude/venv`）
+- MATLAB（matlab-lab-report 技能需要）
+
+## 安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/Jim2474/Jim-s_Skill_repository.git
+
+# 安装 Python 依赖
+pip install -r requirements.txt
+
+# 注册 vision-recognize MCP 服务器（全局生效）
+claude mcp add vision-recognize -s user -- ~/.claude/venv/Scripts/python <path>/vision-recognize/mcp_server.py
+```
+
+## 目录结构
+
+```
+.
+├── vision-recognize/          # 图片识别 MCP 服务器
+│   ├── mcp_server.py          # MCP 服务端（主入口）
+│   ├── vision_recognize.py    # CLI 脚本（备用）
+│   └── SKILL.md
+├── mm-modeling-copilot/       # 数学建模助手
+├── paper-spine*/              # 论文写作工作流（12 个子技能）
+├── matlab-lab-report/         # MATLAB 实验报告生成
+├── tailored-resume-generator/ # 简历生成器
+├── design-md/                 # 品牌设计系统
+├── learned/                   # 学习到的模式
+├── examples/                  # 示例项目
+└── requirements.txt           # Python 依赖
+```
+
+## 原 EXP Report Creator 文档
+
+MATLAB 实验报告生成的详细用法见下方。
+
+### 已验证流程
 
 以 `examples/exp2` 为例：
 
@@ -13,47 +81,15 @@
 3. 渲染成类似 MATLAB 命令窗口的白底输出图。
 4. 将输出图和 MATLAB 曲线图排版进 A4 竖版 `.docx` 报告。
 
-## 环境要求
-
-- Windows
-- MATLAB，且 `matlab.exe` 可从命令行调用
-- Python 3.10+
-- Python 依赖见 `requirements.txt`
-
-## 快速运行实验二示例
-
-在仓库根目录执行：
+### 快速运行实验二示例
 
 ```powershell
 matlab -batch "run('examples/exp2/experiment2_run.m')"
 python examples/exp2/build_exp2_report.py
 ```
 
-生成的报告位于：
-
-```text
-examples/exp2/reports/2300810617李俊明_实验二_A4示例报告_修正版.docx
-```
-
-## 目录结构
-
-```text
-examples/exp2/
-├─ experiment2_run.m          # MATLAB 实验二脚本
-├─ build_exp2_report.py       # 生成 A4 Word 报告
-├─ experiment2_output.txt     # MATLAB 运行输出示例
-├─ figures/                   # MATLAB 直接保存的曲线图
-├─ output_images/             # MATLAB 风格输出图
-└─ reports/                   # 生成的 Word 报告
-
-skills/matlab-lab-report/
-└─ SKILL.md                   # 给 Codex / Claude Code 使用的 skill 草案
-```
-
-## 设计原则
+### 设计原则
 
 - 报告必须是 A4 竖版，方便直接打印。
 - 结果必须来自 MATLAB 真实运行，不手写伪造输出。
-- 命令窗口结果默认使用 MATLAB 风格渲染图，必要时可额外补一张真实 MATLAB 窗口截图。
-- 不把课程指导书、PPT、大量临时文件作为项目核心内容上传。
-
+- 命令窗口结果默认使用 MATLAB 风格渲染图。
