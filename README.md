@@ -22,6 +22,7 @@ Claude Code 自建技能集合，包含 MCP 服务器、数学建模、论文写
 | 技能 | 说明 |
 |------|------|
 | **matlab-lab-report** | MATLAB 控制系统实验自动生成 A4 Word 报告 |
+| **recog-and-report** | 识别指定 Word 模板的排版与格式要求，并在保留分节符、封面表格样式的前提下，自动填充/生成结构完整的学术论文或技术报告 |
 | **tailored-resume-generator** | 根据 JD 自动生成针对性简历 |
 | **design-md** | 将品牌设计系统应用到项目（支持 71 个品牌） |
 
@@ -61,6 +62,7 @@ claude mcp add vision-recognize -s user -- ~/.claude/venv/Scripts/python <path>/
 ├── mm-modeling-copilot/       # 数学建模助手
 ├── paper-spine*/              # 论文写作工作流（12 个子技能）
 ├── matlab-lab-report/         # MATLAB 实验报告生成
+├── recog-and-report/          # Word 模板论文/报告自适应生成器
 ├── tailored-resume-generator/ # 简历生成器
 ├── design-md/                 # 品牌设计系统
 ├── learned/                   # 学习到的模式
